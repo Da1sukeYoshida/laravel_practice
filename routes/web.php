@@ -11,10 +11,6 @@
 |
 */
 
-use App\Task;
-use Illuminate\Http\Request;
-use Validator;
-
 Route::get('/', 'Test_app@index');
 
 Route::get('/home','Test_app@home');
