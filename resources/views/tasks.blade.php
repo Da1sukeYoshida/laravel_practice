@@ -55,6 +55,10 @@
 									<button type="submit" class="btn btn-danger">
 										<i class="fa fa-trash"></i> Delete
 									</button>
+								</form>
+								<form action="{{ url('task/'.$task->id) }}" method="post">
+									{{ csrf_field() }}
+									<input type="text" name="name" id="task-name" class="form-control">
 									<button type="submit" class="btn btn-primary">
 										Update
 									</button>
