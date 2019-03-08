@@ -11,62 +11,11 @@
 |
 */
 
-use App\Task;
-use Illuminate\Http\Request;
+Route::get('/', 'Test_app@index');
 
-Route::get('/', function () {
-    //return view('welcome');
+Route::get('/home','Test_app@home');
 
-    $tasks = Task::orderBy('updated_at', 'asc')->get();
+Route::post('/task','Test_app@add_task');
+Route::delete('/task/{task}', 'Test_app@delete_task');
 
-    return view('tasks',[
-      'tasks' => $tasks
-    ]);
-});
-
-Route::get('/home',function(){
-    return view('home');
-});
-
-Route::post('/task',function (Request $request){
-        $validator = Validator::make($request->all(),[
-          'name' => 'required|max:255',
-        ]);
-
-        if($validator->fails()){
-          return redirect('/')
-            ->withInput()
-            ->withErrors($validator);
-        }
-
-        $task = new Task;
-        $task->name = $request->name;
-        $task->save();
-
-        return redirect('/');
-});
-
-Route::delete('/task/{task}', function(Task $task){
-        $task->delete();
-
-        return redirect('/');
-});
-
-Route::post('/task/{task}', function(Task $task, Request $request){
-        $validator = Validator::make($request->all(),[
-          'name' => 'required|max:255',
-        ]);
-
-        if($validator->fails()){
-          return redirect('/')
-            ->withInput()
-            ->withErrors($validator);
-        }
-        //$task->name = "abc";
-        //$task->save();
-
-        //$task->update(['name' => $task->name]);
-        $task->update(['name' => $request->name]);
-
-        return redirect('/');
-});
+Route::post('/task/{task}', 'Test_app@update_task');
